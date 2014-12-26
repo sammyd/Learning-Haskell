@@ -1,5 +1,7 @@
--- CH3 Problem 1 - replicate length
 
+import Data.List
+
+-- CH3 Problem 1 - replicate length
 elementCount []      = 0
 elementCount (x:xs)  = 1 + (elementCount xs)
 
@@ -27,7 +29,23 @@ isPalindrome xs = (reverse xs  == xs)
 
 
 -- CH3 Problem 6 - Sort list of lists by length
-import Data.List
+
 sortByLength :: [[a]] -> [[a]]
 sortByLength l = sortBy compareLength l
                  where compareLength list1 list2 = compare (length list1) (length list2)
+
+-- CH3 Problem 7 - Intersperse
+isperse :: a -> [[a]] -> [a]
+isperse _ []  = []
+isperse _ [x] = x
+isperse s (x:xs) = x ++ [s] ++ isperse s xs
+
+-- CH3 Problem 8 - Tree height
+data Tree a = Node a (Tree a) (Tree a)
+            | Empty
+              deriving (Show)
+
+treeHeight :: Tree a -> Int
+treeHeight Empty = 0
+treeHeight (Node _ t1 t2) = (max (treeHeight t1) (treeHeight t2)) + 1
+
