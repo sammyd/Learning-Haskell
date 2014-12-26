@@ -49,3 +49,31 @@ treeHeight :: Tree a -> Int
 treeHeight Empty = 0
 treeHeight (Node _ t1 t2) = (max (treeHeight t1) (treeHeight t2)) + 1
 
+
+-- CH3 Problem 9 - Direction datatype
+data Direction = LeftTurn
+               | RightTurn
+               | StraightLine
+                 deriving (Show)
+
+
+-- CH3 Problem 10 - Calculate turn Direction
+data Cartesian2D = Cartesian2D Double Double deriving (Eq, Show)
+
+turnDirection :: Cartesian2D -> Cartesian2D -> Cartesian2D -> Direction
+turnDirection a b c
+  | grad1 < grad2  = LeftTurn
+  | grad1 == grad2 = StraightLine
+  | grad1 > grad2  = RightTurn
+  where
+    grad1 = grad a b
+    grad2 = grad b c
+    grad (Cartesian2D x1 y1) (Cartesian2D x2 y2) = (y2 - y1) / (x2 - x1)
+
+
+directionList :: [Cartesian2D] -> [Direction]
+directionList [] = []
+directionList (x1:x2:x3:xs) = (turnDirection x1 x2 x3) : directionList (x2 : x3 : xs)
+directionList (x:xs) = []
+
+
