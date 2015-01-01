@@ -20,6 +20,9 @@ safeInit x = Just (init x)
 -- Problem 2: Splits whenever predicate returns false
 splitWith :: (a -> Bool) -> [a] -> [[a]]
 splitWith _ [] = []
-splitWith f (x:xs) = if f x
-                     then x:(splitWith xs)
-                     else 
+splitWith f xs = start : splitWith f (tail' end)
+    where
+        (start, end) = break f xs
+        -- Need this function to handle an empty list
+        tail' [] = []
+        tail' (_:ys) = ys
