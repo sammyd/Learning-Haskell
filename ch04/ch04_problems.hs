@@ -37,3 +37,18 @@ asInt_fold ('-':xs) = -(asInt_fold xs)
 asInt_fold xs = foldl inc 0 xs
     where inc s d | (isDigit d) = 10 * s + (digitToInt d)
                   | otherwise = error ("Not a digit: " ++ [d])
+
+-- Problem 2: Without error
+type ErrorMessage = String
+asInt_either :: String -> Either ErrorMessage Int
+asInt_either ('-':xs) = case res of
+    Left err -> Left err
+    Right r  -> Right (negate r)
+  where res = asInt_either xs
+asInt_either xs = foldl inc (Right 0) xs
+    where inc (Left err) _ = Left err
+          inc (Right s) d | (isDigit d) = Right (10 * s + (digitToInt d))
+                          | otherwise   = Left ("Not a digit: " ++ [d])
+
+
+
