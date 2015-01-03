@@ -1,3 +1,5 @@
+import Data.Char (digitToInt, isDigit)
+
 -- Problem 1: Safe versions of functions
 
 safeHead :: [a] -> Maybe a
@@ -26,3 +28,12 @@ splitWith f xs = start : splitWith f (tail' end)
         -- Need this function to handle an empty list
         tail' [] = []
         tail' (_:ys) = ys
+
+
+-- FOLDING EXERCISES --
+-- Problem 1: folding string -> int converter
+asInt_fold :: String -> Int
+asInt_fold ('-':xs) = -(asInt_fold xs)
+asInt_fold xs = foldl inc 0 xs
+    where inc s d | (isDigit d) = 10 * s + (digitToInt d)
+                  | otherwise = error ("Not a digit: " ++ [d])
