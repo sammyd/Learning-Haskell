@@ -51,4 +51,9 @@ asInt_either xs = foldl inc (Right 0) xs
                           | otherwise   = Left ("Not a digit: " ++ [d])
 
 
+-- Problem 3: concat with foldr
+concat' :: [[a]] -> [a]
+concat' xs = foldr (++) [] xs
+
+
 
